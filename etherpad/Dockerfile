@@ -3,16 +3,16 @@ MAINTAINER william.petit@ptitcloud.fr
 
 # Container installation
 
-RUN apt-get update &&\
+RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\
   apt-get install --no-install-recommends --yes ca-certificates curl
 
 RUN curl --silent --location https://deb.nodesource.com/setup_4.x | /usr/bin/env bash -
 
-RUN apt-get install --yes --no-install-recommends nodejs
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs
 
 # Get Etherpad-lite's other dependencies
-RUN apt-get update
-RUN apt-get install -y gzip git-core python libssl-dev pkg-config build-essential gettext-base
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+  apt-get install -y gzip git-core python libssl-dev pkg-config build-essential gettext-base
 
 # Grab the latest Git version
 RUN cd /opt && git clone git://github.com/ether/etherpad-lite.git etherpad

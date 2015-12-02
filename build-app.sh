@@ -10,14 +10,15 @@ fi
 
 IMAGE=yasp/$APP
 
-echo "Building $APP as Docker image '$IMAGE'..."
+echo "Building '$APP' app as Docker image '$IMAGE'..."
 
 docker build \
+  --rm \
   --build-arg HTTP_PROXY=$HTTP_PROXY \
   --build-arg HTTPS_PROXY=$HTTPS_PROXY \
   --build-arg http_proxy=$http_proxy \
   --build-arg https_proxy=$https_proxy \
   -t "$IMAGE" \
-  "$DIR/$APP"
-  
+  "$DIR/$APP" || exit 1
+
 echo [DONE]
