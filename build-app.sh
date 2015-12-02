@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
 APP=$1
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ -z "$APP" ] || [ ! -d "$DIR/$APP" ]; then
+  echo "Usage: $0 <app_name>"
+  exit 1
+fi
+
 IMAGE=yasp/$APP
+
+echo "Building $APP as Docker image '$IMAGE'..."
 
 docker build \
   --build-arg HTTP_PROXY=$HTTP_PROXY \
@@ -9,4 +18,6 @@ docker build \
   --build-arg http_proxy=$http_proxy \
   --build-arg https_proxy=$https_proxy \
   -t "$IMAGE" \
-  $APP
+  "$DIR/$APP"
+  
+echo [DONE]

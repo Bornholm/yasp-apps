@@ -1,17 +1,17 @@
 FROM debian:jessie
 
-LABEL io.aegir.app.enabled="1"
-LABEL io.aegir.app.name="Test App"
-LABEL io.aegir.app.description="A simple Aegir app for test purpose"
+LABEL io.yasp.app.enabled="1"
+LABEL io.yasp.app.name="Test App"
+LABEL io.yasp.app.description="A simple Yasp app for test purpose"
 
 # App variables
 
 # "Message" variable
-LABEL io.aegir.app.vars.message.label="Message"
-LABEL io.aegir.app.vars.message.description="A basic message to print"
-LABEL io.aegir.app.vars.message.type="text"
-LABEL io.aegir.app.vars.message.defaultValue="Hello world !"
-LABEL io.aegir.app.vars.message.env="MY_MESSAGE"
+LABEL io.yasp.app.vars.message.label="Message"
+LABEL io.yasp.app.vars.message.description="A basic message to print"
+LABEL io.yasp.app.vars.message.type="text"
+LABEL io.yasp.app.vars.message.defaultValue="Hello world !"
+LABEL io.yasp.app.vars.message.env="MY_MESSAGE"
 
 EXPOSE 80
 VOLUME /test
