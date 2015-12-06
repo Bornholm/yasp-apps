@@ -27,12 +27,26 @@ class ProxyController extends Controller {
       .then(result => res.status(201).send(result))
       .catch(next)
     ;
-    
+
+  }
+
+  removeRecord(req, res, next) {
+
+    let recordKey = req.params.recordKey;
+
+    // TODO validate record payload
+
+    this._proxy.removeRecord(recordKey)
+      .then(() => res.status(204).end())
+      .catch(next)
+    ;
+
   }
 
   bindTo(app) {
     app.get('/', this.showRecords.bind(this));
     app.post('/', this.createRecord.bind(this));
+    app.delete('/:recordKey', this.removeRecord.bind(this));
   }
 
 }

@@ -3,6 +3,6 @@
 
 /* Expose your reducers here */
 
-import Dummy from './dummy';
+import Records from './records';
 
-export default { Dummy };
+export default { Records };
