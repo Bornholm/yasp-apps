@@ -39,32 +39,30 @@ CMD "/opt/etherpad/run.sh"
 
 # Yasp App manifest
 
-LABEL io.yasp.app.enabled="1"
-LABEL io.yasp.app.name="Etherpad"
-LABEL io.yasp.app.description="A basic installation of Etherpad"
-
-LABEL io.yasp.app.service.enabled="1"
-LABEL io.yasp.app.service.webAdminPort="8080"
-
-# Yasp variables
-
-LABEL io.yasp.app.vars.title.label="Titre de l'instance Etherpad"
-LABEL io.yasp.app.vars.title.description="Le titre affiché par votre instance Etherpad"
-LABEL io.yasp.app.vars.title.type="text"
-LABEL io.yasp.app.vars.title.defaultValue="Mon Etherpad"
-LABEL io.yasp.app.vars.title.env="ETHERPAD_TITLE"
-
-LABEL io.yasp.app.vars.welcome.label="Message d'accueil"
-LABEL io.yasp.app.vars.welcome.type="text"
-LABEL io.yasp.app.vars.welcome.defaultValue="Bienvenue sur l'instance Etherpad d'Yasp"
-LABEL io.yasp.app.vars.welcome.env="ETHERPAD_WELCOME"
-
-LABEL io.yasp.app.vars.admin.label="Nom du compte administrateur"
-LABEL io.yasp.app.vars.admin.type="text"
-LABEL io.yasp.app.vars.admin.defaultValue="admin"
-LABEL io.yasp.app.vars.admin.env="ETHERPAD_ADMIN"
-
-LABEL io.yasp.app.vars.admin_password.label="Mot de passe du compte administrateur"
-LABEL io.yasp.app.vars.admin_password.type="text"
-LABEL io.yasp.app.vars.admin_password.defaultValue="admin"
-LABEL io.yasp.app.vars.admin_password.env="ETHERPAD_ADMIN_PASSWORD"
+LABEL io.yasp.app.enabled="1" \
+  io.yasp.app.name="Etherpad"\
+  io.yasp.app.description="A basic installation of Etherpad"\
+  \
+  io.yasp.app.service.enabled="1"\
+  io.yasp.app.service.webAdminPort="8080"\
+  \
+  io.yasp.app.vars.title.label="Titre de l'instance Etherpad"\
+  io.yasp.app.vars.title.description="Le titre affiché par votre instance Etherpad"\
+  io.yasp.app.vars.title.type="text"\
+  io.yasp.app.vars.title.defaultValue="Mon Etherpad"\
+  io.yasp.app.vars.title.env="ETHERPAD_TITLE"\
+  \
+  io.yasp.app.vars.welcome.label="Message d'accueil"\
+  io.yasp.app.vars.welcome.type="text"\
+  io.yasp.app.vars.welcome.defaultValue="Bienvenue sur l'instance Etherpad d'Yasp"\
+  io.yasp.app.vars.welcome.env="ETHERPAD_WELCOME"\
+  \
+  io.yasp.app.vars.admin.label="Nom du compte administrateur"\
+  io.yasp.app.vars.admin.type="text"\
+  io.yasp.app.vars.admin.defaultValue="admin"\
+  io.yasp.app.vars.admin.env="ETHERPAD_ADMIN"\
+  \
+  io.yasp.app.vars.admin_password.label="Mot de passe du compte administrateur"\
+  io.yasp.app.vars.admin_password.type="text"\
+  io.yasp.app.vars.admin_password.defaultValue="admin"\
+  io.yasp.app.vars.admin_password.env="ETHERPAD_ADMIN_PASSWORD"

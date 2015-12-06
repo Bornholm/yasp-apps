@@ -1,0 +1,42 @@
+{
+  "name": "yasp-reverse-proxy",
+  "version": "0.0.0",
+  "description": "No description yet.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "./node_modules/.bin/supervisor -w './lib' -i './lib/client' index.js",
+    "test": "./node_modules/.bin/nodeunit test/*.js"
+  },
+  "author": "William Petit &lt;william.petit@ptitcloud.fr&gt;",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "nodeunit": "^0.9.1",
+    "rimraf": "^2.4.4",
+    "supervisor": "^0.9.1"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "body-parser": "^1.14.1",
+    "bootstrap": "^3.3.5",
+    "browserify-middleware": "^7.0.0",
+    "compression": "^1.6.0",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "level-party": "^2.1.2",
+    "level-sublevel": "^6.5.2",
+    "morgan": "^1.6.1",
+    "node-uuid": "^1.4.7",
+    "rc": "^1.1.2",
+    "react": "^0.14.2",
+    "react-addons-update": "^0.14.2",
+    "react-bootstrap": "^0.27.3",
+    "react-dom": "^0.14.2",
+    "react-redux": "^4.0.0",
+    "redbird": "^0.4.11",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0"
+  }
+}
