@@ -7,11 +7,12 @@ LABEL io.yasp.app.description="A simple Yasp app for test purpose"
 # App variables
 
 # "Message" variable
-LABEL io.yasp.app.vars.message.label="Message"
-LABEL io.yasp.app.vars.message.description="A basic message to print"
-LABEL io.yasp.app.vars.message.type="text"
-LABEL io.yasp.app.vars.message.defaultValue="Hello world !"
-LABEL io.yasp.app.vars.message.env="MY_MESSAGE"
+LABEL io.yasp.app.vars.message.label="Message"\
+  io.yasp.app.uid="io.yasp.apps.test-app" \
+  io.yasp.app.vars.message.description="A basic message to print"\
+  io.yasp.app.vars.message.type="text"\
+  io.yasp.app.vars.message.defaultValue="Hello world !"\
+  io.yasp.app.vars.message.env="MY_MESSAGE"
 
 EXPOSE 80
 VOLUME /test

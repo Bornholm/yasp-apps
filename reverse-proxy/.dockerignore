@@ -1,4 +1,4 @@
-/app/node_modules
-/app/.*rc
-/app/.cert
-/app/data
+app/node_modules
+app/.*rc
+app/.cert
+app/data

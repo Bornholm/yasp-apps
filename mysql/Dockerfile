@@ -18,6 +18,7 @@ CMD /usr/local/bin/run-app
 # Yasp App manifest
 
 LABEL io.yasp.app.enabled="1" \
+  io.yasp.app.uid="io.yasp.apps.mysql" \
   io.yasp.app.name="MySQL" \
   io.yasp.app.description="A basic installation of MySQL with PHPMyAdmin" \
   io.yasp.app.service.enabled="1" \

@@ -7,10 +7,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\
 
 RUN curl --silent --location https://deb.nodesource.com/setup_5.x | /usr/bin/env bash -
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs openssl
 
 ADD app /opt/yasp-reverseproxy
-ADD reverseproxy-conf.json /opt/yasp-reverseproxy/.yasp-reverseproxyrc
+ADD reverseproxy-conf.json /etc/yasp-reverseproxy/config
 
 WORKDIR /opt/yasp-reverseproxy
 
@@ -28,3 +28,9 @@ EXPOSE 80
 EXPOSE 443
 
 CMD run-app
+
+LABEL io.yasp.app.enabled="1" \
+  io.yasp.app.uid="io.yasp.apps.reverse-proxy" \
+  io.yasp.app.name="Reverse Proxy" \
+  io.yasp.app.description="A reverse proxy service for Yasp apps" \
+  io.yasp.app.service.enabled="1" \

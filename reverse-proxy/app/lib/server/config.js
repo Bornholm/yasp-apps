@@ -1,7 +1,7 @@
 /* jshint esnext: true, node: true */
 var path = require('path');
 
-module.exports = require('rc')('yasp-reverse-proxy', {
+module.exports = require('rc')('yasp-reverseproxy', {
 
   web: {
 

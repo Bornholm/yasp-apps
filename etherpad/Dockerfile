@@ -33,7 +33,6 @@ ADD run.sh /opt/etherpad/
 RUN chmod +x /opt/etherpad/run.sh
 
 EXPOSE 9001
-EXPOSE 8080
 
 CMD "/opt/etherpad/run.sh"
 
@@ -44,7 +43,6 @@ LABEL io.yasp.app.enabled="1" \
   io.yasp.app.description="A basic installation of Etherpad"\
   \
   io.yasp.app.service.enabled="1"\
-  io.yasp.app.service.webAdminPort="8080"\
   \
   io.yasp.app.vars.title.label="Titre de l'instance Etherpad"\
   io.yasp.app.vars.title.description="Le titre affiché par votre instance Etherpad"\
