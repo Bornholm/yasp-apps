@@ -2,11 +2,6 @@
 
 YASP_ADMIN_SOCK=/var/run/yasp/admin.sock
 
-# Export PM2 env
-export PM2_HOME=.
-# Avoid Keymetrics banner
-echo 1 > "touch"
-
 # Create Yasp dedicated volume if necessary
 mkdir -p $(dirname $YASP_ADMIN_SOCK)
 
@@ -14,7 +9,8 @@ mkdir -p $(dirname $YASP_ADMIN_SOCK)
 rm -f "$YASP_ADMIN_SOCK"
 
 # TEMP: generate dev certificates
-./scripts/generate-dev-certificate.sh
+chmod +x ./scripts/generate-dev-certificate.sh
+/opt/yasp-reverseproxy/scripts/gen-dev-certificate.sh
 
 # Start yasp-reverseproxy
 NODE_ENV=production /usr/bin/pm2 start /opt/yasp-reverseproxy/index.js -i 0 || exit 1

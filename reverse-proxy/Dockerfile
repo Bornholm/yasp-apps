@@ -14,6 +14,8 @@ ADD reverseproxy-conf.json /etc/yasp-reverseproxy/config
 
 WORKDIR /opt/yasp-reverseproxy
 
+VOLUME /opt/yasp-reverseproxy/data
+
 # Install app dependencies
 RUN npm install
 
