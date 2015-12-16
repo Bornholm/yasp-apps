@@ -19,26 +19,17 @@ module.exports = require('rc')('yasp-reverseproxy', {
 
   },
 
-  proxy: {
+  nginx: {
 
-    // HTTP port
-    port: 8080,
+    parserSyntax: path.join(__dirname, 'parser/nginx.pegjs'),
 
-    // HTTPS port
-    ssl: {
-      port: 8443,
-      key: path.join(__dirname, '../../.cert/dev-key.pem'),
-      cert: path.join(__dirname, '../../.cert/dev-cert.pem')
+    reloadCommand: 'nginx -s reload',
+    sitesEnabledDir: '/etc/nginx/sites-enabled',
+
+    templates: {
+      reverseProxy: path.join(__dirname, 'templates/reverse-proxy.tpl')
     }
 
-  },
-
-  store: {
-    dbPath: path.join(__dirname, '../../data'),
-    options: {
-      createIfMissing: true,
-      encoding: 'json'
-    }
   }
 
 });

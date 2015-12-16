@@ -1,2 +1,2 @@
 /* jshint esnext: true, node: true */
-exports.ProxyService = require('./proxy');
+exports.NginxService = require('./nginx');
