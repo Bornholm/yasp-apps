@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Col, Table, Button, Input } from 'react-bootstrap';
 import { Actions } from './store';
+import { RawEntryEditor } from './components';
 
 class AppClient extends React.Component {
 
@@ -25,7 +26,6 @@ class AppClient extends React.Component {
   render() {
 
     let rows = this.props.entries.map(entry => {
-
       return (
         /* jshint ignore:start */
         <tr key={entry.id}>
@@ -39,7 +39,6 @@ class AppClient extends React.Component {
         </tr>
         /* jshint ignore:end */
       );
-
     });
 
     return (
@@ -62,7 +61,7 @@ class AppClient extends React.Component {
             <tfoot>
               <tr>
                 <td>
-                  <Input ref="rawInput" type="textarea" />
+                  <RawEntryEditor ref="entryEdit" />
                 </td>
                 <td>
                   <Button onClick={this.onAddEntryClick.bind(this)} bsStyle="success">Ajouter</Button>
@@ -77,6 +76,21 @@ class AppClient extends React.Component {
 
   }
 
+  getEntryComponent(entry) {
+
+    let component;
+
+    // Default, return a basic raw editor
+    component = (
+      /* jshint ignore:start */
+      <RawEntryEditor rawConfig={entry.raw} />
+      /* jshint ignore:end */
+    );
+
+    return component;
+
+  }
+
   updateEntries() {
     this.props.dispatch(Actions.Entries.fetchEntries());
   }
@@ -88,13 +102,10 @@ class AppClient extends React.Component {
   }
 
   onAddEntryClick() {
-
-    let rawConfig = this.refs.rawInput.getValue();
-
-    this.props.dispatch(Actions.Entries.createEntry({rawConfig}))
+    let entryOpts = this.refs.entryEdit.getEntryOpts();
+    this.props.dispatch(Actions.Entries.createEntry(entryOpts))
       .then(() => this.updateEntries())
     ;
-
   }
 
 }

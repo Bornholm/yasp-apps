@@ -1,4 +1,4 @@
 // Expose here your local components
 
-// import MyComponent from './my-component';
-// export { MyComponent };
+import RawEntryEditor from './raw-entry-editor';
+export { RawEntryEditor };

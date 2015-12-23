@@ -6,6 +6,7 @@ let handlebars = require('handlebars');
 let fs = require('fs');
 let path = require('path');
 let pegjs = require('pegjs');
+let exec = require('child_process').exec;
 
 const FILE_PREFIX = 'yasp-';
 const NGINX_FILE_PATTERN = /^yasp-([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/i;
@@ -75,6 +76,15 @@ class NginxService {
       fs.writeFile(filePath, rawConfig, (err) => {
         if(err) return reject(err);
         return resolve(entryId);
+      });
+    });
+  }
+
+  reload() {
+    return new Promise((resolve, reject) => {
+      exec(this._nginxConfig.reloadCommand, err => {
+        if(err) return reject(err);
+        return resolve();
       });
     });
   }

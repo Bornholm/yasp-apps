@@ -25,7 +25,11 @@ class ProxyController extends Controller {
     let rawConfig = req.body.rawConfig;
 
     this._nginx.saveRawConfig(rawConfig)
-      .then(result => res.status(201).send(result))
+      .then(result => {
+        return this._nginx.reload()
+          .then(() => res.status(201).send(result))
+        ;
+      })
       .catch(next)
     ;
 
@@ -38,7 +42,11 @@ class ProxyController extends Controller {
     // TODO validate record payload
 
     this._nginx.deleteEntry(entryId)
-      .then(() => res.status(204).end())
+      .then(result => {
+        return this._nginx.reload()
+          .then(() => res.status(204).send(result))
+        ;
+      })
       .catch(next)
     ;
 
