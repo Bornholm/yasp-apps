@@ -1,5 +1,5 @@
 /* jshint esnext: true, node: true */
 'use strict';
 
-import Records from './records';
-export default { Records };
+import Entries from './entries';
+export default { Entries };

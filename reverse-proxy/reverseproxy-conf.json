@@ -1,11 +1,5 @@
 {
   "web": {
     "socketPath": "/var/run/yasp/admin.sock"
-  },
-  "proxy": {
-    "port": 80,
-    "ssl": {
-      "port": 443
-    }
   }
 }

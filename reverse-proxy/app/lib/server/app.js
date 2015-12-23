@@ -31,35 +31,19 @@ class App {
 
     return new Promise((resolve, reject) => {
 
-      this._startReverseProxy()
-        .then(() => {
+      if(socketPath) {
+        app.listen(socketPath, _listenHandler);
+      } else {
+        app.listen(port, host, _listenHandler);
+      }
 
-          if(socketPath) {
-            app.listen(socketPath, _listenHandler);
-          } else {
-            app.listen(port, host, _listenHandler);
-          }
-
-          function _listenHandler(err) {
-            if(err) return reject(err);
-            return resolve();
-          }
-
-        })
-        .catch(err => {
-          this._proxyService.stopProxy();
-          return reject(err);
-        })
-      ;
+      function _listenHandler(err) {
+        if(err) return reject(err);
+        return resolve();
+      }
 
     });
 
-  }
-
-  _startReverseProxy() {
-    let proxy = this._proxyService;
-    proxy.startProxy();
-    return proxy.loadExistingRecords();
   }
 
   _configure() {
@@ -77,11 +61,11 @@ class App {
     app.use(bodyParser.json());
 
     // Create proxy service
-    this._proxyService = new services.ProxyService(config.proxy, config.store);
+    this._nginxService = new services.NginxService(config.nginx);
 
-    let recordsCtrl = new controllers.RecordsController(this._proxyService);
+    let proxyCtrl = new controllers.ProxyController(this._nginxService);
 
-    app.use('/api/records', recordsCtrl.middleware());
+    app.use('/api/proxy', proxyCtrl.middleware());
 
     // Expose client application via browserify
     app.use('/js', browserifyMiddleware(config.web.clientBaseDir + '/js', {

@@ -6,4 +6,9 @@ let App = require('./lib/server/app');
 
 let app = new App(config);
 
-app.start();
+app.start()
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  })
+;

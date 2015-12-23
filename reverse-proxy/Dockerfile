@@ -7,12 +7,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\
 
 RUN curl --silent --location https://deb.nodesource.com/setup_5.x | /usr/bin/env bash -
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs openssl
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs openssl nginx-full git-core
 
 ADD app /opt/yasp-reverseproxy
 ADD reverseproxy-conf.json /etc/yasp-reverseproxy/config
 
 WORKDIR /opt/yasp-reverseproxy
+
+# Remove default nginx entry
+RUN rm /etc/nginx/sites-enabled/default
 
 VOLUME /etc/nginx/sites-enabled
 
@@ -27,7 +30,6 @@ ADD run-app.sh /usr/local/bin/run-app
 RUN chmod +x /usr/local/bin/run-app
 
 EXPOSE 80
-EXPOSE 443
 
 CMD run-app
 

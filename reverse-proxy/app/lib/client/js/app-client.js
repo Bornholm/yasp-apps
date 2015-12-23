@@ -10,7 +10,7 @@ class AppClient extends React.Component {
 
   static select(state) {
     return {
-      records: state.records || []
+      entries: state.entries || []
     };
   }
 
@@ -19,20 +19,19 @@ class AppClient extends React.Component {
   }
 
   componentDidMount() {
-    this.updateRecords();
+    this.updateEntries();
   }
 
   render() {
 
-    let rows = this.props.records.map(item => {
+    let rows = this.props.entries.map(entry => {
 
       return (
         /* jshint ignore:start */
-        <tr key={item.key}>
-          <td>{item.record.from}</td>
-          <td>{item.record.to}</td>
+        <tr key={entry.id}>
+          <td>{this.getEntryComponent(entry)}</td>
           <td>
-            <Button onClick={this.onRemoveRecordClick.bind(this, item.key)}
+            <Button onClick={this.onRemoveEntryClick.bind(this, entry.id)}
               className="close" bsStyle="danger" bsSize="xsmall">
               <span aria-hidden="true">&times;</span>
             </Button>
@@ -53,8 +52,7 @@ class AppClient extends React.Component {
           <Table responsive>
             <thead>
               <tr>
-                <th>Source</th>
-                <th>Destination</th>
+                <th>Configuration</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -64,13 +62,10 @@ class AppClient extends React.Component {
             <tfoot>
               <tr>
                 <td>
-                  <Input ref="fromInput" type="text" />
+                  <Input ref="rawInput" type="textarea" />
                 </td>
                 <td>
-                  <Input ref="toInput" type="text" />
-                </td>
-                <td>
-                  <Button onClick={this.onAddRecordClick.bind(this)} bsStyle="success">Ajouter</Button>
+                  <Button onClick={this.onAddEntryClick.bind(this)} bsStyle="success">Ajouter</Button>
                 </td>
               </tr>
             </tfoot>
@@ -82,23 +77,22 @@ class AppClient extends React.Component {
 
   }
 
-  updateRecords() {
-    this.props.dispatch(Actions.Records.fetchRecords());
+  updateEntries() {
+    this.props.dispatch(Actions.Entries.fetchEntries());
   }
 
-  onRemoveRecordClick(recordKey) {
-    this.props.dispatch(Actions.Records.deleteRecord(recordKey))
-      .then(() => this.updateRecords())
+  onRemoveEntryClick(entryId) {
+    this.props.dispatch(Actions.Entries.deleteEntry(entryId))
+      .then(() => this.updateEntries())
     ;
   }
 
-  onAddRecordClick() {
+  onAddEntryClick() {
 
-    let from = this.refs.fromInput.getValue();
-    let to = this.refs.toInput.getValue();
+    let rawConfig = this.refs.rawInput.getValue();
 
-    this.props.dispatch(Actions.Records.createRecord(from, to))
-      .then(() => this.updateRecords())
+    this.props.dispatch(Actions.Entries.createEntry({rawConfig}))
+      .then(() => this.updateEntries())
     ;
 
   }

@@ -1,2 +1,2 @@
 /* jshint esnext: true, node: true */
-exports.RecordsController = require('./records');
+exports.ProxyController = require('./proxy');

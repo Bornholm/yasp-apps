@@ -11,7 +11,7 @@ let createAppStore = applyMiddleware(
 
 let appReducer = combineReducers({
   /* Edit and add your own reducers here */
-  records: Reducers.Records
+  entries: Reducers.Entries
 });
 
 export default createAppStore(appReducer);

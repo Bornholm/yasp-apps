@@ -3,6 +3,6 @@
 
 /* Expose your reducers here */
 
-import Records from './records';
+import Entries from './entries';
 
-export default { Records };
+export default { Entries };

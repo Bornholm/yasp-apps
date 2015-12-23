@@ -33,12 +33,25 @@ class NginxService {
         let promises = files.map(f => {
           let id = f.match(NGINX_FILE_PATTERN)[1];
           return this._loadConfigFile(f)
-            .then(ast => { return { id, ast }; })
+            .then(res => {
+              res.id = id;
+              return res;
+            })
           ;
         });
         return Promise.all(promises);
       })
     ;
+  }
+
+  deleteEntry(entryId) {
+    return new Promise((resolve, reject) => {
+      let filePath = this._getEntryPath(entryId);
+      fs.unlink(filePath, function(err) {
+        if(err) return reject(err);
+        return resolve();
+      });
+    });
   }
 
   saveTemplate(templateName, data, entryId) {
@@ -58,13 +71,18 @@ class NginxService {
   saveRawConfig(rawConfig, entryId) {
     return new Promise((resolve, reject) => {
       if(!entryId) entryId = uuid.v4();
-      let sitesEnabledDir = this._nginxConfig.sitesEnabledDir;
-      let filePath = path.join(sitesEnabledDir, FILE_PREFIX+entryId);
+      let filePath = this._getEntryPath(entryId);
       fs.writeFile(filePath, rawConfig, (err) => {
         if(err) return reject(err);
         return resolve(entryId);
       });
     });
+  }
+
+  _getEntryPath(entryId) { 
+    let sitesEnabledDir = this._nginxConfig.sitesEnabledDir;
+    let filePath = path.join(sitesEnabledDir, FILE_PREFIX+entryId);
+    return filePath;
   }
 
   _loadAndCompileTemplate(path) {
@@ -85,15 +103,15 @@ class NginxService {
   _loadConfigFile(filename) {
     return new Promise((resolve, reject) => {
       let sitesEnabledDir = this._nginxConfig.sitesEnabledDir;
-      fs.readFile(path.join(sitesEnabledDir, filename), 'utf8', (err, content) => {
+      fs.readFile(path.join(sitesEnabledDir, filename), 'utf8', (err, raw) => {
         if(err) return reject(err);
         let ast;
         try {
-          ast = this._parser.parse(content);
+          ast = this._parser.parse(raw);
         } catch(err) {
           return reject(err);
         }
-        return resolve(ast);
+        return resolve({ast, raw});
       });
     });
   }

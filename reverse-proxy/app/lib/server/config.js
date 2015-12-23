@@ -5,7 +5,7 @@ module.exports = require('rc')('yasp-reverseproxy', {
 
   web: {
 
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8888,
     // Or
     socketPath: null,
