@@ -7,6 +7,7 @@ let fs = require('fs');
 let path = require('path');
 let pegjs = require('pegjs');
 let exec = require('child_process').exec;
+let debug = require('debug')('yasp-reverseproxy:services:nginx');
 
 const FILE_PREFIX = 'yasp-';
 const NGINX_FILE_PATTERN = /^yasp-([a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})$/i;
@@ -113,13 +114,14 @@ class NginxService {
   _loadConfigFile(filename) {
     return new Promise((resolve, reject) => {
       let sitesEnabledDir = this._nginxConfig.sitesEnabledDir;
-      fs.readFile(path.join(sitesEnabledDir, filename), 'utf8', (err, raw) => {
+      let filePath = path.join(sitesEnabledDir, filename);
+      fs.readFile(filePath, 'utf8', (err, raw) => {
         if(err) return reject(err);
-        let ast;
+        let ast = null;
         try {
           ast = this._parser.parse(raw);
         } catch(err) {
-          return reject(err);
+          debug(`Could\'nt parse file ${filePath} ! Error: %s`, err);
         }
         return resolve({ast, raw});
       });

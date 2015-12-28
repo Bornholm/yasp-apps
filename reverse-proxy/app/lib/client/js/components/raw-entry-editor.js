@@ -2,7 +2,8 @@
 'use strict';
 
 import React from 'react';
-import { Input } from 'react-bootstrap';
+import CodeMirror from 'react-code-mirror';
+require('codemirror/mode/nginx/nginx');
 
 class RawEntryEditor extends React.Component {
 
@@ -11,13 +12,22 @@ class RawEntryEditor extends React.Component {
     this.state = {
       rawConfig: ''
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   render() {
+    let codeMirrorOpts = {
+      mode: 'nginx',
+      lineNumbers: true,
+      viewportMargin: Infinity
+    };
     return (
       /* jshint ignore:start */
-      <Input type="textarea" ref="rawEntryInput"
-        value={this.state.rawConfig} onChange={this.onChange.bind(this)} />
+      <CodeMirror
+        readOnly={this.props.readOnly}
+        value={this.state.rawConfig}
+        onChange={this.onChange}
+        {...codeMirrorOpts} />
       /* jshint ignore:end */
     );
   }
@@ -38,6 +48,10 @@ class RawEntryEditor extends React.Component {
     return {
       rawConfig: this.state.rawConfig
     };
+  }
+
+  reset() {
+    this.setState({rawConfig: ''});
   }
 
 }

@@ -29,11 +29,11 @@ class AppClient extends React.Component {
       return (
         /* jshint ignore:start */
         <tr key={entry.id}>
-          <td>{this.getEntryComponent(entry)}</td>
+          <td>{this.getEntryComponent(entry, true)}</td>
           <td>
             <Button onClick={this.onRemoveEntryClick.bind(this, entry.id)}
-              className="close" bsStyle="danger" bsSize="xsmall">
-              <span aria-hidden="true">&times;</span>
+               bsStyle="danger" bsSize="xsmall">
+               Supprimer
             </Button>
           </td>
         </tr>
@@ -64,7 +64,11 @@ class AppClient extends React.Component {
                   <RawEntryEditor ref="entryEdit" />
                 </td>
                 <td>
-                  <Button onClick={this.onAddEntryClick.bind(this)} bsStyle="success">Ajouter</Button>
+                  <Button onClick={this.onAddEntryClick.bind(this)}
+                    bsStyle="success"
+                    bsSize="xsmall">
+                    Ajouter
+                  </Button>
                 </td>
               </tr>
             </tfoot>
@@ -76,14 +80,14 @@ class AppClient extends React.Component {
 
   }
 
-  getEntryComponent(entry) {
+  getEntryComponent(entry, readOnly) {
 
     let component;
 
     // Default, return a basic raw editor
     component = (
       /* jshint ignore:start */
-      <RawEntryEditor rawConfig={entry.raw} />
+      <RawEntryEditor rawConfig={entry.raw} readOnly={readOnly} />
       /* jshint ignore:end */
     );
 
@@ -104,7 +108,10 @@ class AppClient extends React.Component {
   onAddEntryClick() {
     let entryOpts = this.refs.entryEdit.getEntryOpts();
     this.props.dispatch(Actions.Entries.createEntry(entryOpts))
-      .then(() => this.updateEntries())
+      .then(() => {
+        this.refs.entryEdit.reset();
+        this.updateEntries();
+      })
     ;
   }
 
