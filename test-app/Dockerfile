@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM gliderlabs/alpine:3.3
 
 LABEL io.yasp.app.enabled="1"
 LABEL io.yasp.app.name="Test App"
