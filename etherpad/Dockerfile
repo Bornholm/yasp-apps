@@ -1,20 +1,14 @@
-FROM debian:jessie
+FROM gliderlabs/alpine:3.3
 MAINTAINER william.petit@ptitcloud.fr
 
+ENV BUILDPKG build-base git python openssl-dev pkgconfig curl
+ENV SYSPKG ca-certificates nodejs gzip bash gettext
+
 # Container installation
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\
-  apt-get install --no-install-recommends --yes ca-certificates curl
-
-RUN curl --silent --location https://deb.nodesource.com/setup_4.x | /usr/bin/env bash -
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends nodejs
-
-# Get Etherpad-lite's other dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-  apt-get install -y gzip git-core python libssl-dev pkg-config build-essential gettext-base
+RUN apk add $SYSPKG $BUILDPKG --no-cache
 
 # Grab the latest Git version
+RUN mkdir /opt
 RUN cd /opt && git clone git://github.com/ether/etherpad-lite.git etherpad
 
 # Install node dependencies
@@ -34,6 +28,8 @@ RUN chmod +x /opt/etherpad/run.sh
 
 EXPOSE 9001
 EXPOSE 8080
+
+RUN apk del $BUILDPKG
 
 CMD "/opt/etherpad/run.sh"
 
