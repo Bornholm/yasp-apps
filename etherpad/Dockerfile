@@ -1,8 +1,8 @@
 FROM gliderlabs/alpine:3.3
 MAINTAINER william.petit@ptitcloud.fr
 
-ENV BUILDPKG build-base git python openssl-dev pkgconfig gettext curl
-ENV SYSPKG ca-certificates nodejs gzip bash
+ENV BUILDPKG build-base git python openssl-dev pkgconfig curl
+ENV SYSPKG ca-certificates nodejs gzip bash gettext
 
 # Container installation
 RUN apk add $SYSPKG $BUILDPKG --no-cache
