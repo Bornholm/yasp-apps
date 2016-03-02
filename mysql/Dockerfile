@@ -1,19 +1,25 @@
-FROM corbinu/docker-phpmyadmin
+FROM gliderlabs/alpine:3.3
+MAINTAINER william.petit@ptitcloud.fr
 
 MAINTAINER William Petit <wpetit@cadoles.com>
 
-RUN apt-get update &&\
-  apt-get install -y --no-install-recommends mariadb-server mariadb-client
+ENV PHPMYADMIN_VERSION 4.5.5.1
+ENV BUILDPKG wget tar xz
+ENV SYSPKG ca-certificates mariadb \
+  php-fpm php-json php-zlib php-xml \
+  php-pdo php-phar php-openssl \
+  php-pdo_mysql php-mysqli php-gd \
+  php-iconv php-mcrypt \
+  bash nginx musl
 
-RUN sed -i 's/listen 80;/listen unix:\/var\/run\/yasp\/admin.sock;/' /etc/nginx/sites-enabled/site
+RUN apk add $SYSPKG $BUILDPKG --no-cache
 
-ENV MYSQL_PORT_3306_TCP_ADDR 127.0.0.1
-ENV MYSQL_PORT_3306_TCP_PORT 3306
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.5.5.1/phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.xz
+RUN tar -xJf phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages.tar.xz
+RUN mkdir -p /var/www/phpmyadmin
+RUN cp -R phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages/* /var/www/phpmyadmin/
 
-ADD run.sh /usr/local/bin/run-app
-RUN chmod +x /usr/local/bin/run-app
-
-CMD /usr/local/bin/run-app
+RUN apk del $BUILDPKG && rm -rf /var/cache/apk/*
 
 # Yasp App manifest
 
