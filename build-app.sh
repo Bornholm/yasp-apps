@@ -21,6 +21,7 @@ docker build \
   --build-arg https_proxy=$https_proxy \
   -t "$IMAGE:$NOW" \
   -t "$IMAGE:latest" \
+  --rm=true
   "$DIR/$APP" || exit 1
 
 echo [DONE]
