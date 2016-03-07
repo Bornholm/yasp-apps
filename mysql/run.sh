@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-mysqld &
-
-phpmyadmin-start
+( ./start-lighttpd.sh ) &
+( ./start-mysqld.sh )
