@@ -8,7 +8,7 @@ ENV BUILDPKG wget tar xz sed
 ENV SYSPKG ca-certificates \
   mysql mysql-client php-mysql php-mysqli \
   php-pdo php-pdo_pgsql php-soap php-xmlrpc php-posix php-mcrypt php-gettext php-ldap php-ctype php-dom \
-  lighttpd php-common php-iconv php-json php-gd php-curl php-xml php-pgsql php-imap php-cgi fcgi socat
+  lighttpd php-common php-iconv php-json php-gd php-curl php-xml php-pgsql php-imap php-cgi fcgi
 
 RUN apk add $SYSPKG $BUILDPKG --no-cache
 

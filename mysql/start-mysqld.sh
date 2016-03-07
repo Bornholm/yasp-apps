@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ ! -d "/run/mysqld" ]; then
+  mkdir -p /run/mysqld
+fi
+
 if [ ! -z "$(ls /var/lib/mysql/)" ]; then
   echo "[i] MySQL directory already present, skipping creation"
 else
@@ -10,10 +14,6 @@ else
   if [ "$MYSQL_ROOT_PASSWORD" = "" ]; then
     MYSQL_ROOT_PASSWORD=111111
     echo "[i] MySQL root Password: $MYSQL_ROOT_PASSWORD"
-  fi
-
-  if [ ! -d "/run/mysqld" ]; then
-    mkdir -p /run/mysqld
   fi
 
   tfile=`mktemp`
@@ -34,6 +34,5 @@ EOF
   /usr/bin/mysqld --user=root --bootstrap --verbose=0 < $tfile
   rm -f $tfile
 fi
-
 
 exec /usr/bin/mysqld --user=root --console
